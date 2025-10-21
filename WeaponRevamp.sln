@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeaponRevamp", "WeaponRevamp.csproj", "{BB9EBEB3-569D-402F-9724-3DA91F2AC515}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB9EBEB3-569D-402F-9724-3DA91F2AC515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9EBEB3-569D-402F-9724-3DA91F2AC515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9EBEB3-569D-402F-9724-3DA91F2AC515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9EBEB3-569D-402F-9724-3DA91F2AC515}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D079DCD6-16ED-404A-9BDB-268CBC90203A}
+	EndGlobalSection
+EndGlobal

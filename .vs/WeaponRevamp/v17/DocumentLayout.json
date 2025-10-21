@@ -1,0 +1,153 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\projectiles\\boomerangs\\boomerangbaseai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:projectiles\\boomerangs\\boomerangbaseai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\projectiles\\boomerangs\\woodenboomerangprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:projectiles\\boomerangs\\woodenboomerangprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\projectiles\\boomerangs\\flamarangprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:projectiles\\boomerangs\\flamarangprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\projectiles\\swords\\cobaltswordnorthprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:projectiles\\swords\\cobaltswordnorthprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\buffs\\bows\\deathtoxin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:buffs\\bows\\deathtoxin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\projectiles\\swords\\influxwaverslashprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:projectiles\\swords\\influxwaverslashprojectile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\items\\launchers\\celebration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:items\\launchers\\celebration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|c:\\users\\camer\\onedrive\\documents\\my games\\terraria\\tmodloader\\modsources\\weaponrevamp\\items\\magicguns\\leafblower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BB9EBEB3-569D-402F-9724-3DA91F2AC515}|WeaponRevamp.csproj|solutionrelative:items\\magicguns\\leafblower.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WoodenBoomerangProjectile.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Boomerangs\\WoodenBoomerangProjectile.cs",
+              "RelativeDocumentMoniker": "Projectiles\\Boomerangs\\WoodenBoomerangProjectile.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Boomerangs\\WoodenBoomerangProjectile.cs",
+              "RelativeToolTip": "Projectiles\\Boomerangs\\WoodenBoomerangProjectile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T01:45:43.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BoomerangBaseAI.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Boomerangs\\BoomerangBaseAI.cs",
+              "RelativeDocumentMoniker": "Projectiles\\Boomerangs\\BoomerangBaseAI.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Boomerangs\\BoomerangBaseAI.cs",
+              "RelativeToolTip": "Projectiles\\Boomerangs\\BoomerangBaseAI.cs",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAmwHoAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T22:15:22.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FlamarangProjectile.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Boomerangs\\FlamarangProjectile.cs",
+              "RelativeDocumentMoniker": "Projectiles\\Boomerangs\\FlamarangProjectile.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Boomerangs\\FlamarangProjectile.cs",
+              "RelativeToolTip": "Projectiles\\Boomerangs\\FlamarangProjectile.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T22:15:10.063Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CobaltSwordNorthProjectile.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Swords\\CobaltSwordNorthProjectile.cs",
+              "RelativeDocumentMoniker": "Projectiles\\Swords\\CobaltSwordNorthProjectile.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Swords\\CobaltSwordNorthProjectile.cs",
+              "RelativeToolTip": "Projectiles\\Swords\\CobaltSwordNorthProjectile.cs",
+              "ViewState": "AQIAADEAAAAAAAAAAAAcwEkAAABuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T22:48:44.781Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "InfluxWaverSlashProjectile.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Swords\\InfluxWaverSlashProjectile.cs",
+              "RelativeDocumentMoniker": "Projectiles\\Swords\\InfluxWaverSlashProjectile.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Projectiles\\Swords\\InfluxWaverSlashProjectile.cs",
+              "RelativeToolTip": "Projectiles\\Swords\\InfluxWaverSlashProjectile.cs",
+              "ViewState": "AQIAAHAAAAAAAAAAAAAcwJEAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T22:47:47.235Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Celebration.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Items\\Launchers\\Celebration.cs",
+              "RelativeDocumentMoniker": "Items\\Launchers\\Celebration.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Items\\Launchers\\Celebration.cs",
+              "RelativeToolTip": "Items\\Launchers\\Celebration.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAUwBoAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T22:39:33.709Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "LeafBlower.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Items\\MagicGuns\\LeafBlower.cs",
+              "RelativeDocumentMoniker": "Items\\MagicGuns\\LeafBlower.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Items\\MagicGuns\\LeafBlower.cs",
+              "RelativeToolTip": "Items\\MagicGuns\\LeafBlower.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAABhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T22:39:18.291Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DeathToxin.cs",
+              "DocumentMoniker": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Buffs\\Bows\\DeathToxin.cs",
+              "RelativeDocumentMoniker": "Buffs\\Bows\\DeathToxin.cs",
+              "ToolTip": "C:\\Users\\camer\\OneDrive\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\WeaponRevamp\\Buffs\\Bows\\DeathToxin.cs",
+              "RelativeToolTip": "Buffs\\Bows\\DeathToxin.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAAmwE8AAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-03T17:29:19.3Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

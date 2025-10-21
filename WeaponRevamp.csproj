@@ -1,0 +1,27 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>WeaponRevamp</AssemblyName>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Buffs\Bows\DeathToxin.png" />
+    <None Remove="Buffs\Swords\PalladiumBleed.png" />
+    <None Remove="Buffs\Swords\PalladiumBleedHeal.png" />
+    <None Remove="effects\Shockwave.fx" />
+    <None Remove="Gores\BurningCloud1.png" />
+    <None Remove="Projectiles\Books\LunarFlareMoonProjectile.png" />
+    <None Remove="Projectiles\Bows\ChlorophyteShotbowProjectile.png" />
+    <None Remove="Projectiles\Bows\DaedalusStormbowProjectile.png" />
+    <None Remove="Projectiles\Bows\Genesis\GenesisJesterArrowProjectile.png" />
+    <None Remove="Projectiles\Bows\PlatinumBowProjectile.png" />
+    <None Remove="Projectiles\Bows\TungstenBowProjectile.png" />
+    <None Remove="Projectiles\MagicGuns\LeafBlowerWindProjectile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Effects\" />
+    <Folder Include="Items\Yoyos\" />
+    <Folder Include="Projectiles\OtherMelee\" />
+  </ItemGroup>
+</Project>

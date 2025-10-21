@@ -1,0 +1,123 @@
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Diagnostics.Eventing.Reader;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.GameContent;
+using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO.Pipes;
+using System.Text;
+using System.IO;
+using Microsoft.CodeAnalysis;
+using Microsoft.Build.Evaluation;
+using Microsoft.Xna.Framework;
+using ReLogic.Content;
+using WeaponRevamp.Dusts;
+
+
+namespace WeaponRevamp.Projectiles.Guns.UnifiedBullet
+{
+    
+    public class GoldenSmokeTrail : BulletBehavior
+    {
+        private Color dustColor = new Color(0.7f, 0.5f, 0.0f, 0.5f);
+        //private Color dustColor = new Color(0.6f, 0.0f, 0.2f, 0.35f);
+        public override void AI(ref Projectile projectile)
+        {
+            if (projectile.ai[1] > 5)
+            {
+                
+                int dustCount = (int)(projectile.velocity.Length() * 0.3f);
+                for (float i = 0; i < dustCount; i++)
+                {
+                    Dust smoke = Dust.NewDustDirect(projectile.position + new Vector2(-2,-2), 0, 0, ModContent.DustType<TracerDust>(), 0, 0, 0, dustColor);
+                    smoke.velocity *= 0f;
+                    smoke.position -= projectile.velocity * 2f;
+                    smoke.position += projectile.velocity * i / dustCount;
+                    smoke.velocity += projectile.velocity * 0.1f;
+                    //smoke.rotation = Main.rand.NextFloat() * (float)Math.PI * 2f;
+                    smoke.rotation = (projectile.ai[1]+i / dustCount) * -0.5f * Math.Sign(projectile.velocity.X) + Main.rand.NextFloat()*0.1f;
+                    //smoke.fadeIn = 0.15f * Math.Abs(Vector2.Dot(Vector2.Normalize(projectile.velocity), Vector2.UnitY.RotatedBy(smoke.rotation))) + 0.00f;
+                    smoke.fadeIn = 0.1f + Main.rand.NextFloat()*0.05f;
+                    smoke.scale = 0.6f + Main.rand.NextFloat()*0.2f;
+                }
+                
+                
+            }
+        }
+
+        public override void OnKill(ref Projectile projectile, ref int timeLeft)
+        {
+            if (projectile.ai[1] > 5)
+            {
+                int dustCount = (int)(projectile.velocity.Length() * 0.3f);
+                for (float i = 0; i < dustCount; i++)
+                {
+                    Dust smoke = Dust.NewDustDirect(projectile.oldPosition + new Vector2(-2,-2), 0, 0, ModContent.DustType<TracerDust>(), 0, 0, 0, dustColor);
+                    smoke.velocity *= 0f;
+                    smoke.position -= projectile.oldVelocity * 1f;
+                    smoke.position += projectile.oldVelocity * i / dustCount;
+                    smoke.velocity += projectile.oldVelocity * 0.1f;
+                    //smoke.rotation = Main.rand.NextFloat() * (float)Math.PI * 2f;
+                    smoke.rotation = (projectile.ai[1]+i / dustCount) * -0.5f * Math.Sign(projectile.oldVelocity.X) + Main.rand.NextFloat()*0.1f;
+                    //smoke.fadeIn = 0.15f * Math.Abs(Vector2.Dot(Vector2.Normalize(projectile.velocity), Vector2.UnitY.RotatedBy(smoke.rotation))) + 0.00f;
+                    smoke.fadeIn = 0.1f + Main.rand.NextFloat()*0.05f;
+                    smoke.scale = 0.6f + Main.rand.NextFloat()*0.2f;
+                }
+                
+                
+            }
+        }
+    }
+
+    public class MidasOnHit : BulletBehavior
+    {
+
+        public override void OnHitNPC(ref Projectile projectile, ref NPC target, ref NPC.HitInfo hit, ref int damageDone)
+        {
+            target.AddBuff(BuffID.Midas, 120);
+        }
+    }
+
+    public class ReverseDirectionOnHit : BulletBehavior
+    {
+        Vector2 acceleration = Vector2.Zero;
+        private bool netUpdateNextTick = false;
+
+        public override void SendExtraAI(ref BinaryWriter writer)
+        {
+            writer.WritePackedVector2(acceleration);
+        }
+
+        public override void ReceiveExtraAI(ref BinaryReader reader)
+        {
+            acceleration = reader.ReadPackedVector2();
+        }
+
+        public override void AI(ref Projectile projectile)
+        {
+            if (netUpdateNextTick)
+            {
+                projectile.netUpdate = true;
+                netUpdateNextTick = false;
+            }
+            projectile.velocity += acceleration;
+        }
+
+        public override void OnHitNPC(ref Projectile projectile, ref NPC target, ref NPC.HitInfo hit, ref int damageDone)
+        {
+            netUpdateNextTick = true;
+            acceleration = projectile.velocity * -0.015f;
+            projectile.timeLeft = 200;
+            projectile.damage = (int)(projectile.damage * 0.4);
+        }
+    }
+
+}
+

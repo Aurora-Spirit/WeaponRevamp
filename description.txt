@@ -1,0 +1,28 @@
+This mod aims to rework the functionality of every vanilla weapon.
+Tack this onto your modded playthrough to help freshen up the experience, and make vanilla weapons new and interesting again!
+This mod also adds a couple new weapons to fill gaps in progression.
+This is a beta version. Not every feature is finished yet.
+
+Current features:
+-51 weapons reworked
+-1 weapon added from old gen console, reworked as well
+-2 new ammos (1 arrow and 1 bullet)
+
+Planned features:
+-Most weapons reworked (there are a couple weapons that were changed in 1.4.4 that are not planned to be reworked)
+-All old gen console weapons added and reworked
+-Many new weapons (27 are planned so far)
+-5 new darts, to keep your dart gun viable until moonlord for you dart gun fans
+-A mod config system to let you manually enable or disable individual reworks for your perfect playthrough, in case you hate my changes for your favorite weapon
+
+Report bugs, provide feedback, and suggest ideas to me on discord: @aurora_spirit
+
+I'm a solo dev, so updates will likely take a while. Be patient!
+
+Credits:
+Aurora_Spirit - Coding, Spriting, Concepts
+Alex (the bat) - Spriting, Concepts
+
+Voltics - Concepts
+
+

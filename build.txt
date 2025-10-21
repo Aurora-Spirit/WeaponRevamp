@@ -1,0 +1,3 @@
+displayName = Full Weapons Overhaul
+author = Aurora_Spirit
+version = 0.1.1

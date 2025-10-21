@@ -1,0 +1,138 @@
+Items: {
+	DefaultSword: {
+		DisplayName: Default Sword
+		Tooltip: test tooltip
+	}
+
+	TestRifle: {
+		DisplayName: Test Rifle
+		Tooltip: ""
+	}
+
+	SawedOffShotgun: {
+		DisplayName: Sawed Off Shotgun
+		Tooltip: ""
+	}
+
+	PotionGlove: {
+		DisplayName: Potion Glove
+		Tooltip: ""
+	}
+
+	Tizona: {
+		DisplayName: Tizona
+		Tooltip: ""
+	}
+
+	SpectreArrow: {
+		DisplayName: Spectre Arrow
+		Tooltip: ""
+	}
+
+	Genesis: {
+		DisplayName: Genesis
+		Tooltip: Supercharges the effect of the arrow used
+	}
+
+	ElectricBullet: {
+		DisplayName: Electric Bullet
+		Tooltip: ""
+	}
+}
+
+Tooltips: {
+	CobaltRepeater:
+		'''
+		Fires a 2-shot burst of magnetic arrows in an alternating pattern
+		Fire just one arrow to switch the pattern
+		'''
+	DemonBow: Arrows arc to hit enemies below them
+	HallowedRepeater: Shoots bolts of light with double pierce
+	MythrilRepeater: Consumes mana to fire additional mana arrows
+	TungstenBow: Ignores some enemy defense
+	TungstenShortsword: Ignores some enemy defense
+	SpaceGun: Can hit targets multiple times
+	Minishark: Bullets chase enemies when in water
+	MythrilHalberd: Consumes mana to extend its range
+	EmeraldStaff: Ignores some enemy defense
+	CobaltSword: Creates alternating magnetic swirls
+	MythrilSword: Consumes mana to extend its range
+	PalladiumSword: Causes your enemies to bleed, healing you
+	TungstenBroadsword: Ignores some enemy defense
+	ShadowbeamStaff: Damage increases with every bounce
+	LaserMachineGun: Spread increases with mana sickness
+}
+
+Buffs: {
+	DeathToxin: {
+		DisplayName: Death Toxin
+		Description: How do you have time to read this?
+	}
+
+	PalladiumBleed: {
+		DisplayName: Palladium Bleed
+		Description: Losing life
+	}
+
+	PalladiumBleedHeal: {
+		DisplayName: Palladium Bloodsoak
+		Description: Absorbing life
+	}
+}
+
+Projectiles: {
+	KrakenWaterStream.DisplayName: Kraken
+	RifleRound.DisplayName: Rifle Round
+	SawedOffBlast.DisplayName: Sawed Off Blast
+	NothingProjectile.DisplayName: Nothing Projectile
+	InfluxWaverLaserProjectile.DisplayName: Influx Waver
+	InfluxWaverSlashProjectile.DisplayName: Influx Waver
+	TizonaProjectile.DisplayName: Tizona
+	MeowmereSlashProjectile.DisplayName: Meowmere
+	GoldBowProjectile.DisplayName: Gold Bow
+	UnifiedArrowProjectile.DisplayName: Arrow
+	MoltenFuryProjectile.DisplayName: Molten Fury
+	MarrowProjectile.DisplayName: Marrow
+	MoltenFuryGeyserProjectile.DisplayName: Molten Fury
+	FlyingDragonSlashProjectile.DisplayName: Flying Dragon
+	DemonBowProjectile.DisplayName: Demon Bow
+	PlatinumBowProjectile.DisplayName: Platinum Bow
+	LunarFlareMoonProjectile.DisplayName: Lunar Flare
+	DaedalusStormbowProjectile.DisplayName: Daedalus Stormbow
+	ChlorophyteShotbowProjectile.DisplayName: Chlorophyte Shotbow
+	CandyCornOrangeProjectile.DisplayName: Candy Corn
+	CandyCornWhiteProjectile.DisplayName: Candy Corn
+	CandyCornReducedProjectile.DisplayName: Candy Corn
+	CandyCornYellowProjectile.DisplayName: Candy Corn
+	HallowedRepeaterProjectile.DisplayName: Hallowed Repeater
+	SpectreArrow.DisplayName: Spectre Arrow
+	SpectreArrowProjectile.DisplayName: Spectre Arrow
+	MythrilSwordSlashProjectile.DisplayName: Mythril Sword
+	MythrilManaArrowProjectile.DisplayName: Mythril Mana Arrow
+	MythrilRepeaterProjectile.DisplayName: Mythril Repeater
+	CobaltSwordNorthProjectile.DisplayName: Cobalt Sword
+	CobaltSwordSouthProjectile.DisplayName: Cobalt Sword
+	CobaltRepeaterNorthProjectile.DisplayName: Cobalt Repeater
+	CobaltRepeaterSouthProjectile.DisplayName: Cobalt Repeater
+	LeafBlowerWindProjectile.DisplayName: Leaf Blower Wind
+	GenesisGoldArrowProjectile.DisplayName: Genesis
+	GenesisGoldBowProjectile.DisplayName: Genesis
+	GenesisJesterArrowProjectile.DisplayName: Genesis
+	GenesisShimmerArrowProjectile.DisplayName: Genesis
+	GenesisBoneArrowProjectile.DisplayName: Genesis
+	GenesisVenomArrowProjectile.DisplayName: Genesis
+	GenesisHellfireArrowProjectile.DisplayName: Genesis
+	CelebrationProjectile.DisplayName: Celebration
+	CelebrationClusterProjectile.DisplayName: Celebration
+	TungstenBowProjectile.DisplayName: Tungsten Bow
+	GenesisCursedArrowProjectile.DisplayName: Genesis
+	GenesisCursedFireballProjectile.DisplayName: Genesis
+	UnifiedBulletProjectile.DisplayName: Bullet
+	ShotgunPelletProjectile.DisplayName: Bullet
+	Shockwave.DisplayName: Shockwave
+	SniperRifleProjectile.DisplayName: Sniper Rifle
+	ElectricBulletProjectile.DisplayName: Electric Bullet
+	MinisharkProjectile.DisplayName: Minishark
+	HandgunProjectile.DisplayName: Handgun
+	ClockworkCogProjectile.DisplayName: Clockwork Cog
+}

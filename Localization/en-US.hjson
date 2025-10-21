@@ -1,0 +1,17 @@
+ItemTooltip: {
+	LunarFlareBook: Conjures an ethereal moon to smite your foes
+	DaedalusStormbow: Creates a swirling maelstrom of arrows
+	LeafBlower: Creates a projectile-affecting gust of wind filled with razor sharp leaves
+	ClockworkAssaultRifle: "'When the clock strikes 12...'"
+	EmptyBullet:
+		'''
+		Vanilla bullets are all crafted using musket balls.
+		This is still available for mod compatibility.
+		'''
+	VenomBullet: Sticks into enemies
+	NanoBullet: Bounces between enemies
+	PartyBullet: Explodes into confetti and inflicts confusion
+	GoldenBullet: Reverses direction after hitting an enemy, and enemies drop more money
+	ExplodingBullet: Automatically explodes when in range of an enemy
+	MoonlordBullet: "'A true bullet hell'"
+}
