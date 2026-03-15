@@ -53,7 +53,7 @@ namespace WeaponRevamp.Projectiles.Bows
         // Custom AI
         public override void PostAI()
         {
-
+            UnifiedArrowProjectile.CreateArrowTrail(Projectile, new Color(0f,0.1f,0.3f,0f));
             
             if (Main.rand.NextBool(5))
             {

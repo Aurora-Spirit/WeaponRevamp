@@ -15,6 +15,7 @@ using System.Text;
 using System.IO;
 using Microsoft.CodeAnalysis;
 using Microsoft.Build.Evaluation;
+using ReLogic.Content;
 using WeaponRevamp.Dusts;
 using WeaponRevamp.Gores;
 
@@ -27,14 +28,13 @@ namespace WeaponRevamp.Projectiles.Bows
         public int bouncesLeft = 0;
         public int maxBounces = 0;
         public bool useAmmoPhysics = true;
-        public float luminiteTrailXVel = 0;
-        public float luminiteTrailYVel = 0;
-        public bool luminiteDead = false;
         public int maxTimeLeft = 0;
         private bool hellfireExplode = false;
         public int maxSpectreSpinTime = 90;
         public int spectreSpinTime = 90;
-
+        public bool useArrowTrail = true;
+        public static Asset<Texture2D> luminiteEyeTexture;
+        
         //arrow type constants
         internal const int wooden = 1;
         internal const int fire = 2;
@@ -49,8 +49,9 @@ namespace WeaponRevamp.Projectiles.Bows
         internal const int venom = 282;
         internal const int bone = 474;
         internal const int luminite = 639;
+        internal const int luminiteEye = luminite + 1;
         internal const int shimmer = 1006;
-        internal int spectre = ModContent.ProjectileType<SpectreArrowProjectile>();
+        internal static int spectre = ModContent.ProjectileType<SpectreArrowProjectile>();
 
 
 
@@ -61,9 +62,6 @@ namespace WeaponRevamp.Projectiles.Bows
             bouncesLeft = 0;
             maxBounces = 0;
             useAmmoPhysics = true;
-            luminiteTrailXVel = 0;
-            luminiteTrailYVel = 0;
-            luminiteDead = false;
             maxTimeLeft = 0;
 
             Projectile.friendly = true;
@@ -74,7 +72,8 @@ namespace WeaponRevamp.Projectiles.Bows
             Projectile.height = 10;
             Projectile.aiStyle = 0;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.timeLeft = 1200;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 12;
         }
         public override void OnSpawn(IEntitySource source)
         {
@@ -125,16 +124,21 @@ namespace WeaponRevamp.Projectiles.Bows
                 case 639: //luminite
                     Projectile.extraUpdates *= 2;
                     Projectile.extraUpdates += 1;
-                    Projectile.timeLeft = 90;
+                    Projectile.timeLeft = 150;
                     Projectile.ignoreWater = true;
-                    Projectile.usesLocalNPCImmunity = true;
                     Projectile.alpha = 255;
                     Projectile.penetrate += 3;
                     Projectile.localAI[0] = Projectile.Center.X;
                     Projectile.localAI[1] = Projectile.Center.Y;
-                    luminiteTrailXVel = Projectile.velocity.X;
-                    luminiteTrailYVel = Projectile.velocity.Y;
                     Projectile.netUpdate = true;
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity,
+                        ModContent.ProjectileType<LuminiteArrowLaserProjectile>(), Projectile.damage,
+                        Projectile.knockBack, Projectile.owner, Projectile.type, Projectile.ai[1], Projectile.ai[2]);
+                    break;
+                case luminiteEye:
+                    Projectile.extraUpdates *= 2;
+                    Projectile.extraUpdates += 1;
+                    Projectile.timeLeft = 120;
                     break;
                 case 1006: break; //shimmer
 
@@ -172,7 +176,6 @@ namespace WeaponRevamp.Projectiles.Bows
         {
             writer.Write(Projectile.MaxUpdates);
             writer.Write(useAmmoPhysics);
-            writer.Write(luminiteDead);
             writer.Write(maxTimeLeft);
             writer.Write(hellfireExplode);
             writer.Write(spectreSpinTime);
@@ -184,7 +187,6 @@ namespace WeaponRevamp.Projectiles.Bows
         {
             Projectile.MaxUpdates = reader.ReadInt32();
             useAmmoPhysics = reader.ReadBoolean();
-            luminiteDead = reader.ReadBoolean();
             maxTimeLeft = reader.ReadInt32();
             hellfireExplode = reader.ReadBoolean();
             spectreSpinTime = reader.ReadInt32();
@@ -196,6 +198,7 @@ namespace WeaponRevamp.Projectiles.Bows
         public override void Load() //this method AND the following one together allow this projectile to be reflected by biome mimics and the like.
         {
             On_Projectile.CanBeReflected += CanBeReflected2;
+            luminiteEyeTexture = ModContent.Request<Texture2D>("WeaponRevamp/Projectiles/Bows/LuminiteArrowEye");
         }
         private bool CanBeReflected2(On_Projectile.orig_CanBeReflected orig, Projectile self)
         {
@@ -209,6 +212,39 @@ namespace WeaponRevamp.Projectiles.Bows
             return orig(self) || reflect;
         }
         //END CODE TO COPY
+
+        public static void CreateArrowTrail(Projectile projectile, Color trailColor)
+        {
+            trailColor *= projectile.velocity.Length() * 0.05f;
+            float maxUpdatesSqrt = (float)Math.Sqrt(projectile.MaxUpdates);
+            for (int i = -1; i < 2; i+=2)
+            {
+                float dustsPerTick = projectile.velocity.Length()/3f;
+                for (int j = 0; j < dustsPerTick; j++)
+                {
+                    Dust trail = Dust.NewDustDirect(projectile.Center + new Vector2(-4,-4), 0, 0, ModContent.DustType<ArrowTrailDust>());
+                    trail.scale = 0.5f;
+                    trail.noGravity = true;
+                    trail.position += Vector2.Normalize(projectile.velocity)*-8f;
+                    trail.position -= projectile.velocity * ((float)j / dustsPerTick);
+                    trail.color = trailColor;
+                    //trail.velocity = Projectile.velocity.RotatedBy(Math.PI / 2)*i*0.2f;
+                    trail.position += Vector2.Normalize(projectile.velocity).RotatedBy(Math.PI / 2)*i*6f;
+                    trail.velocity *= 0f;
+                    trail.rotation = Main.rand.NextFloat((float)Math.PI / 2f);
+                    trail.fadeIn = 0.03f*maxUpdatesSqrt;
+                    trail.alpha = 128;
+                    trail.noLight = true;
+                    //forgive me for doing the very thing i swore to destroy, a vanilla terraria code style if statement...
+                    if (projectile.ai[0] == hellfire || projectile.ai[0] == jesters || projectile.ai[0] == holy || projectile.ai[0] == unholy || projectile.ai[0] == spectre)
+                    {
+                        trail.noLight = false;
+                    }
+
+                }
+                //trail.velocity += new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * 1f;
+            }
+        }
 
         //Projectile.ai[0] refers to the ammo's projectile id number.
         //1: wooden arrow
@@ -226,7 +262,7 @@ namespace WeaponRevamp.Projectiles.Bows
                 }
             }
             if (useAmmoPhysics) {
-                if (Projectile.ai[0] != ProjectileID.JestersArrow)
+                if (Projectile.ai[0] != ProjectileID.JestersArrow && Projectile.ai[0] != luminiteEye)
                 {
                     if (Projectile.ai[0] == ProjectileID.HolyArrow)
                     {
@@ -290,8 +326,73 @@ namespace WeaponRevamp.Projectiles.Bows
                 Projectile.rotation += 0.2f;
                 spectreSpinTime -= 1;
             }
-            
 
+            if (useArrowTrail && Projectile.timeLeft <= maxTimeLeft - 5)
+            {
+                Color trailColor = new Color(0.1f, 0.1f, 0.1f, 0f);
+                switch (Projectile.ai[0])
+                {
+                    case wooden:
+                        break;
+                    case fire:
+                        break;
+                    case unholy:
+                        trailColor = new Color(0.1f, 0f, 0.2f, 0.3f);
+                        break;
+                    case jesters:
+                        trailColor = new Color(0.4f, 0.4f, 0.4f, 0f);
+                        break;
+                    case hellfire:
+                        trailColor = new Color(0.4f, 0.2f, 0f, 0.1f);
+                        break;
+                    case holy:
+                        trailColor = new Color(0.3f, 0.2f, 0.3f, 0f);
+                        break;
+                    case cursed:
+                        break;
+                    case frostburn:
+                        break;
+                    case chlorophyte:
+                        trailColor = new Color(0.1f, 0.3f, 0.1f, 0.4f);
+                        break;
+                    case ichor:
+                        break;
+                    case venom:
+                        trailColor = new Color(0.15f, 0f, 0.3f, 0.2f);
+                        break;
+                    case bone:
+                        trailColor = new Color(0.1f, 0.09f, 0.08f, 0f);
+                        break;
+                    case luminite:
+                        trailColor = new Color(0f, 0.4f, 0.4f, 0.1f);
+                        break;
+                    case shimmer:
+                        trailColor = new Color(0.3f, 0f, 0.3f, 0f);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (Projectile.ai[0] == spectre)
+                {
+                    if (spectreSpinTime > 0)
+                    {
+                        trailColor = new Color(0.1f, 0.1f, 0.1f, 0.05f);
+                    }
+                    else
+                    {
+                        trailColor = new Color(0f, 0.1f, 0.3f, 0f);
+                    }
+                }
+
+                if (!(spectreSpinTime < 90 && spectreSpinTime > 0))
+                {
+                    if (Projectile.ai[0] != luminiteEye)
+                    {
+                        CreateArrowTrail(Projectile, trailColor);
+                    }
+                }
+            }
 
 
             switch (Projectile.ai[0])
@@ -301,6 +402,10 @@ namespace WeaponRevamp.Projectiles.Bows
                 case fire: //fire
                     Lighting.AddLight(Projectile.Center, 1f, 0.75f, 0.55f);
                     Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0f, 0f, 100);
+                    if (Projectile.wet)
+                    {
+                        Projectile.ai[0] = wooden;
+                    }
                     break;
                 case 4: //unholy
                     Lighting.AddLight(Projectile.Center, 0.5f, 0.1f, 1f); //0.66f, 0.36f, 1f
@@ -318,14 +423,14 @@ namespace WeaponRevamp.Projectiles.Bows
                     break;
                 case 41: //hellfire
                     Lighting.AddLight(Projectile.Center, 1f * 0.3f, 0.8f * 0.3f, 0.6f * 0.3f);
-                    int num240 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 31, 0f, 0f, 100, default(Color), 1.6f);
+                    int num240 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1.6f);
                     Main.dust[num240].noGravity = true;
-                    num240 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+                    num240 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default(Color), 2f);
                     Main.dust[num240].noGravity = true;
                     if (Projectile.timeLeft == 1) HellfireExplode();
                     break;
                 case 91: //holy
-                    Lighting.AddLight(Projectile.Center, (200 / 256) - Projectile.alpha / 3, (200 / 256) - Projectile.alpha / 3, (200 / 256) - Projectile.alpha / 3);
+                    Lighting.AddLight(Projectile.Center, (200f / 256f) - Projectile.alpha / 3f, (200f / 256f) - Projectile.alpha / 3f, (200f / 256f) - Projectile.alpha / 3f);
                     if (Main.rand.Next(2) == 0) {
                         int holyDustType = ((Main.rand.Next(2) != 0) ? 58 : 15);
                         int holyDustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, holyDustType, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f, 150, default(Color), 0.9f);
@@ -334,7 +439,7 @@ namespace WeaponRevamp.Projectiles.Bows
                     break;
                 case 103: //cursed
                     Lighting.AddLight(Projectile.Center, 0.35f, 1f, 0f);
-                    int num9 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 75, 0f, 0f, 100);
+                    int num9 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.CursedTorch, 0f, 0f, 100);
                     if (Main.rand.Next(2) == 0)
                     {
                         Main.dust[num9].noGravity = true;
@@ -343,12 +448,12 @@ namespace WeaponRevamp.Projectiles.Bows
                     break;
                 case 172: //frostburn
                     Lighting.AddLight(Projectile.Center, 0.35f, 0.55f, 1f);
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 135, 0f, 0f, 100);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch, 0f, 0f, 100);
                     break;
                 case 225: //chlorophyte
                     if (Main.rand.Next(2) == 0)
                     {
-                        int num208 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 40);
+                        int num208 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.JunglePlants);
                         Main.dust[num208].noGravity = true;
                         Main.dust[num208].scale = 1.3f;
                         Main.dust[num208].velocity *= 0.5f;
@@ -356,7 +461,7 @@ namespace WeaponRevamp.Projectiles.Bows
                     break;
                 case 278: //ichor
                     Lighting.AddLight(Projectile.Center, 0.35f, 1f, 0f);
-                    int num10 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 169, 0f, 0f, 100);
+                    int num10 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.IchorTorch, 0f, 0f, 100);
                     if (Main.rand.Next(2) == 0)
                     {
                         Main.dust[num10].noGravity = true;
@@ -364,7 +469,7 @@ namespace WeaponRevamp.Projectiles.Bows
                     }
                     break;
                 case 282: //venom
-                    int num207 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 171, 0f, 0f, 100);
+                    int num207 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Venom, 0f, 0f, 100);
                     Main.dust[num207].scale = (float)Main.rand.Next(1, 10) * 0.1f;
                     Main.dust[num207].noGravity = true;
                     Main.dust[num207].fadeIn = 1.5f;
@@ -379,10 +484,32 @@ namespace WeaponRevamp.Projectiles.Bows
                         Projectile.alpha = 0;
                     }
                     break;
+                case luminiteEye:
+                    if (Main.rand.NextBool(3))
+                    {
+                        Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-2,-2), 0, 0, DustID.Vortex);
+                        dust.noGravity = true;
+                        dust.velocity *= 0.3f;
+                        dust.velocity += Projectile.velocity * 0.25f;
+                
+                    }
+                    int targetIndex = Projectile.FindTargetWithLineOfSight(480);
+                    if (targetIndex >= 0 && Main.npc[targetIndex] != null)
+                    {
+                        NPC target = Main.npc[targetIndex];
+                        Vector2 homingDirection = Vector2.Normalize(target.Center - Projectile.position);
+                    
+                        Vector2 homingStrength = homingDirection * 0.7f;
+                        Projectile.velocity += homingStrength;
+                        Projectile.velocity *= 0.95f;
+                        Projectile.netUpdate = true;
+
+                    }
+                    break;
                 case 1006: //shimmer
                     if (Main.rand.Next(8) == 0)
                     {
-                        Dust dust13 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4f, 4f), 306, Projectile.velocity * 1.25f, 0, Main.hslToRgb(Main.rand.NextFloat(), 1f, 0.5f), 1f + Main.rand.NextFloat() * 0.4f);
+                        Dust dust13 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4f, 4f), DustID.SparkForLightDisc, Projectile.velocity * 1.25f, 0, Main.hslToRgb(Main.rand.NextFloat(), 1f, 0.5f), 1f + Main.rand.NextFloat() * 0.4f);
                         dust13.noGravity = true;
                         dust13.fadeIn = dust13.scale + 0.05f;
                         Dust dust14 = Dust.CloneDust(dust13);
@@ -414,7 +541,7 @@ namespace WeaponRevamp.Projectiles.Bows
                     Projectile.netUpdate = true;
                     if (Projectile.penetrate < 0)
                     {
-
+                        Projectile.damage /= 2;
                         Projectile.penetrate = 1;
                         for(int i=0;i<10;i++)
                         {
@@ -467,19 +594,22 @@ namespace WeaponRevamp.Projectiles.Bows
                 case 91: HolyArrowStars(); break; //holy
                 case 103: target.AddBuff(39, 600); break; //cursed
                 case 172: if (Main.rand.NextBool(3)) { target.AddBuff(44, 180); } break; //frostburn
-                case 225: break; //chlorophyte
+                case 225: Projectile.damage = (int)((double)Projectile.damage * 0.7); break; //chlorophyte
                 case 278: target.AddBuff(69, 600); break; //ichor
                 case 282: target.AddBuff(70, 600); break; //venom
                 case 474: break; //bone
                 case 639: //luminite
-                    Projectile.localNPCImmunity[target.whoAmI] = -1;
-                    target.immune[Projectile.owner] = 0;
-                    Projectile.damage = (int)((double)Projectile.damage * 0.96);
-                    if(Projectile.penetrate <= 1)
+                    //AddLuminiteTarget(Projectile.Center);
+                    //old design below
+                    /*Projectile.localNPCImmunity[target.whoAmI] = -1;
+                    target.immune[Projectile.owner] = 0;*/
+                    //Projectile.damage = (int)((double)Projectile.damage * 0.96);
+                    /*if(Projectile.penetrate <= 1)
                     {
                         LuminiteArrowKill();
-                    }
+                    }*/
                     break;
+                case luminiteEye: break;
                 case 1006: break; //shimmer
 
                 default: break;
@@ -493,14 +623,12 @@ namespace WeaponRevamp.Projectiles.Bows
             }
         }
 
-
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             switch (Projectile.ai[0])
             {
                 case 41: HellfireExplode(); break;
                 case 91: HolyArrowStars(); break;
-                case 639: LuminiteArrowKill(); break;
                 default: break;
             }
 
@@ -710,21 +838,7 @@ namespace WeaponRevamp.Projectiles.Bows
             }
             if(Projectile.ai[0] == ProjectileID.MoonlordArrow)
             {
-                if(!luminiteDead)
-                {
-                    LuminiteArrowKill();
-                }
-                if (Projectile.owner == Main.myPlayer)
-                {
-                    int num314 = timeLeft + 1;
-                    int nextSlot = Projectile.GetNextSlot();
-                    if (Main.ProjectileUpdateLoopIndex < nextSlot && Main.ProjectileUpdateLoopIndex != -1)
-                    {
-                        num314++;
-                    }
-                    Vector2 vector38 = new Vector2(luminiteTrailXVel, luminiteTrailYVel);
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.localAI[0], Projectile.localAI[1], vector38.X, vector38.Y, 640, Projectile.damage, Projectile.knockBack, Projectile.owner, 0f, num314);
-                }
+                LuminiteArrowKill();
             }
             if (Projectile.ai[0] == ProjectileID.ShimmerArrow)
             {
@@ -743,9 +857,63 @@ namespace WeaponRevamp.Projectiles.Bows
                     }, Projectile.owner);
                 }
             }
-            
-            
 
+            if (Main.rand.NextBool(2))
+            {
+                CreateShrapnel();
+            }
+
+        }
+
+        public void CreateShrapnel()
+        {
+            NPC target = Projectile.FindTargetWithinRange(32, true);
+            if (target != null && target.active)
+            {
+                
+                int shrapnelType = DustID.WoodFurniture;
+                switch (Projectile.ai[0])
+                {
+                    case wooden: shrapnelType = DustID.WoodFurniture; break;
+                    case fire: shrapnelType = DustID.Torch; break;
+                    case unholy: shrapnelType = DustID.Demonite; break;
+                    case jesters: shrapnelType = 15; break;
+                    case hellfire: shrapnelType = DustID.Torch; break;
+                    case holy: shrapnelType = 15; break;
+                    case cursed: shrapnelType = DustID.CursedTorch; break;
+                    case frostburn: shrapnelType = DustID.IceTorch; break;
+                    case chlorophyte: shrapnelType = DustID.JunglePlants; break;
+                    case ichor: shrapnelType = DustID.IchorTorch; break;
+                    case venom: shrapnelType = DustID.Venom; break;
+                    case bone: shrapnelType = DustID.Bone; break;
+                    case luminite: shrapnelType = DustID.Vortex; break;
+                    case luminiteEye: shrapnelType = DustID.Vortex; break;
+                    case shimmer: shrapnelType = DustID.ShimmerSpark; break;
+                }
+
+                if (Projectile.ai[0] == ModContent.ProjectileType<SpectreArrowProjectile>())
+                {
+                    shrapnelType = DustID.DungeonSpirit;
+                }
+
+                for (int i = 1; i < 5; i++)
+                {
+                    Dust shrapnel = Dust.NewDustDirect(Projectile.Center, 1, 1, shrapnelType);
+                    shrapnel.scale = 2f;
+                    shrapnel.noGravity = true;
+                    shrapnel.velocity = Vector2.Normalize(target.Center - Projectile.Center) * i;
+                }
+                
+                Projectile.damage /= 2;
+                Projectile.knockBack /= 2;
+                Projectile.penetrate = 1;
+                //Projectile.active = true;
+                Projectile.Center = target.Center;
+                Projectile.Damage();
+                //Main.NewText(shrapnel.position.X+" "+shrapnel.position.Y);
+                //Projectile.active = false;
+
+            }
         }
 
         public void LuminiteArrowKill()
@@ -761,19 +929,11 @@ namespace WeaponRevamp.Projectiles.Bows
                 Main.dust[num313].position = Vector2.Lerp(Main.dust[num313].position, Projectile.Center, 0.5f);
                 Main.dust[num313].noGravity = true;
             }
-            luminiteDead = true;
-            Projectile.netUpdate = true;
         }
 
         public override bool? CanHitNPC(NPC target)
         {
-            if(luminiteDead)
-            {
-                return false;
-            } else
-            {
-                return base.CanHitNPC(target);
-            }
+            return base.CanHitNPC(target);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -827,33 +987,43 @@ namespace WeaponRevamp.Projectiles.Bows
                 case 91: //holy
                     renderAlpha = new Color(255, 255, 255, 0); break;
                 //renderAlpha = new Color(200, 200, 200, 0); break;
+                case luminiteEye:
+                    renderAlpha = new Color(0, 0, 0, 0); break;
                 default:
                     renderAlpha = new Color(255, 255, 255, 255); break;
             }
-            if (!luminiteDead) {
-                if (Projectile.ai[0] == ProjectileID.MoonlordArrow)
+            
+            if (Projectile.ai[0] == ProjectileID.MoonlordArrow)
+            {
+                float tempLightingColor = lightingColor - 0.1f;
+                if (tempLightingColor < 0)
                 {
-                    float tempLightingColor = lightingColor - 0.1f;
-                    if (tempLightingColor < 0)
-                    {
-                        tempLightingColor = 0;
-                    }
-                    Vector2 fakeVelocity = Projectile.velocity;
-                    for (int i = 230; i > Projectile.alpha; i -= 25)
-                    {
-                        position -= fakeVelocity;
-                        if (useAmmoPhysics) {
-                            fakeVelocity.Y -= 0.1f;
-                        }
-                        
-                        
-                        Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), new Color(i, i, i, i/2) * tempLightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
-                    }
-
+                    tempLightingColor = 0;
                 }
-                position = Projectile.Center - Main.screenPosition;
-                Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), renderAlpha * lightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                Vector2 fakeVelocity = Projectile.velocity;
+                for (int i = 230; i > Projectile.alpha; i -= 25)
+                {
+                    position -= fakeVelocity;
+                    if (useAmmoPhysics) {
+                        fakeVelocity.Y -= 0.1f;
+                    }
+                    
+                    
+                    Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), new Color(i, i, i, i/2) * tempLightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                }
+
             }
+            position = Projectile.Center - Main.screenPosition;
+            
+            
+            Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), renderAlpha * lightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+            
+            if (Projectile.ai[0] == luminiteEye)
+            {
+                Main.EntitySpriteDraw(luminiteEyeTexture.Value, position, luminiteEyeTexture.Value.Frame(1, 1, 0, 0), new Color(255, 255, 255, 128) * lightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+            }
+
+            
 
 
             return false;
@@ -861,34 +1031,42 @@ namespace WeaponRevamp.Projectiles.Bows
 
         public static Projectile NewUnifiedArrow(IEntitySource spawnSource, Vector2 position, Vector2 velocity, int type, int damage, float knockback, int ammoType, int owner = -1, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f)
         {
-            switch (((EntitySource_ItemUse_WithAmmo)spawnSource).AmmoItemIdUsed)
+            if (ammoType == luminiteEye)
             {
-                case ItemID.WoodenArrow:
-                case ItemID.EndlessQuiver: ammoType = ProjectileID.WoodenArrowFriendly; break;
-                case ItemID.FlamingArrow: ammoType = ProjectileID.FireArrow; break;
-                case ItemID.UnholyArrow: ammoType = ProjectileID.UnholyArrow; break;
-                case ItemID.JestersArrow: ammoType = ProjectileID.JestersArrow; break;
-                case ItemID.HellfireArrow: ammoType = ProjectileID.HellfireArrow; break;
-                case ItemID.HolyArrow: ammoType = ProjectileID.HolyArrow; break;
-                case ItemID.CursedArrow: ammoType = ProjectileID.CursedArrow; break;
-                case ItemID.FrostburnArrow: ammoType = ProjectileID.FrostburnArrow; break;
-                case ItemID.ChlorophyteArrow: ammoType = ProjectileID.ChlorophyteArrow; break;
-                case ItemID.IchorArrow: ammoType = ProjectileID.IchorArrow; break;
-                case ItemID.VenomArrow: ammoType = ProjectileID.VenomArrow; break;
-                case ItemID.BoneArrow: ammoType = ProjectileID.BoneArrowFromMerchant; break;
-                case ItemID.MoonlordArrow: ammoType = ProjectileID.MoonlordArrow; break;
-                case ItemID.ShimmerArrow: ammoType = ProjectileID.ShimmerArrow; break;
-                default:
-                    if (((EntitySource_ItemUse_WithAmmo)spawnSource).AmmoItemIdUsed == ModContent.ItemType<Items.Ammo.SpectreArrow>()) //check for spectre arrow, since switch statements hate ModContent
-                    {
-                        ammoType = ModContent.ProjectileType<SpectreArrowProjectile>();
-                    } else
-                    {
-                        type = 0; //modded ammo (or a bug) detected!
-                    }
-                    break; 
-
+                
             }
+            else
+            {
+                switch (((EntitySource_ItemUse_WithAmmo)spawnSource).AmmoItemIdUsed)
+                {
+                    case ItemID.WoodenArrow:
+                    case ItemID.EndlessQuiver: ammoType = ProjectileID.WoodenArrowFriendly; break;
+                    case ItemID.FlamingArrow: ammoType = ProjectileID.FireArrow; break;
+                    case ItemID.UnholyArrow: ammoType = ProjectileID.UnholyArrow; break;
+                    case ItemID.JestersArrow: ammoType = ProjectileID.JestersArrow; break;
+                    case ItemID.HellfireArrow: ammoType = ProjectileID.HellfireArrow; break;
+                    case ItemID.HolyArrow: ammoType = ProjectileID.HolyArrow; break;
+                    case ItemID.CursedArrow: ammoType = ProjectileID.CursedArrow; break;
+                    case ItemID.FrostburnArrow: ammoType = ProjectileID.FrostburnArrow; break;
+                    case ItemID.ChlorophyteArrow: ammoType = ProjectileID.ChlorophyteArrow; break;
+                    case ItemID.IchorArrow: ammoType = ProjectileID.IchorArrow; break;
+                    case ItemID.VenomArrow: ammoType = ProjectileID.VenomArrow; break;
+                    case ItemID.BoneArrow: ammoType = ProjectileID.BoneArrowFromMerchant; break;
+                    case ItemID.MoonlordArrow: ammoType = ProjectileID.MoonlordArrow; break;
+                    case ItemID.ShimmerArrow: ammoType = ProjectileID.ShimmerArrow; break;
+                    default:
+                        if (((EntitySource_ItemUse_WithAmmo)spawnSource).AmmoItemIdUsed == ModContent.ItemType<Items.Ammo.SpectreArrow>()) //check for spectre arrow, since switch statements hate ModContent
+                        {
+                            ammoType = ModContent.ProjectileType<SpectreArrowProjectile>();
+                        } else
+                        {
+                            type = 0; //modded ammo (or a bug) detected!
+                        }
+                        break; 
+
+                }
+            }
+            
             
             Projectile proj;
             if(type == 0) //for modded ammo, just creates a vanilla projectile
@@ -904,12 +1082,13 @@ namespace WeaponRevamp.Projectiles.Bows
 
         private void HellfireExplode()
         {
+            int radius = 48;
             //Main.NewText("hellfire exploded" + Main.rand.Next(0, 10));
             Projectile.netUpdate = true;
             SoundEngine.PlaySound(in SoundID.Item14, Projectile.position);
 
             
-            Shockwave.NewShockwave(Projectile.Center, 32, 18, new Color(255, 150, 100, 128));
+            Shockwave.NewShockwave(Projectile.Center, radius, 18, new Color(255, 150, 100, 128));
 
             for (int num731 = 0; num731 < 10; num731++)
             {
@@ -946,8 +1125,8 @@ namespace WeaponRevamp.Projectiles.Bows
                 Projectile.penetrate = -1;
                 Projectile.position.X += Projectile.width / 2;
                 Projectile.position.Y += Projectile.height / 2;
-                Projectile.width = 64;
-                Projectile.height = 64;
+                Projectile.width = radius*2;
+                Projectile.height = radius*2;
                 Projectile.position.X -= Projectile.width / 2;
                 Projectile.position.Y -= Projectile.height / 2;
                 Projectile.ai[0] = -1; //prevent recursive explosions by turning off onhit effects

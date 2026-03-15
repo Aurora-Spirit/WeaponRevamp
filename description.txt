@@ -21,8 +21,8 @@ I'm a solo dev, so updates will likely take a while. Be patient!
 
 Credits:
 Aurora_Spirit - Coding, Spriting, Concepts
-Alex (the bat) - Spriting, Concepts
-
+Alex (the bat) - Spriting, Concepts, Wiki
+Steelo - Concepts
 Voltics - Concepts
 
 

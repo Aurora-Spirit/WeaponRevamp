@@ -17,7 +17,7 @@ namespace WeaponRevamp.Items.MagicGuns
         public override void SetDefaults(Item entity)
         {
             base.SetDefaults(entity);
-            entity.damage = 28;
+            entity.damage = 22;
 
         }
         

@@ -425,6 +425,25 @@ public class LuminiteArrowRecipe : ModSystem
 }
 
 
+public class RainbowFlareRecipe : ModSystem
+{
+    public override void PostAddRecipes()
+    {
+        for (int i = 0; i < Recipe.numRecipes; i++)
+        {
+            Recipe recipe = Main.recipe[i];
+
+            if (recipe.HasResult(ItemID.RainbowFlare) && recipe.HasIngredient(ItemID.Flare))
+            {
+                recipe.RemoveIngredient(ItemID.Flare);
+                recipe.AddIngredient(ItemID.Flare, 100);
+                recipe.ReplaceResult(ItemID.RainbowFlare, 100);
+            }
+        }
+    }
+}
+
+
 
 
 

@@ -38,6 +38,16 @@ Items: {
 		DisplayName: Electric Bullet
 		Tooltip: ""
 	}
+
+	IchorFlare: {
+		DisplayName: Ichor Flare
+		Tooltip: ""
+	}
+
+	ClusterFlare: {
+		DisplayName: Cluster Flare
+		Tooltip: ""
+	}
 }
 
 Tooltips: {
@@ -61,6 +71,7 @@ Tooltips: {
 	TungstenBroadsword: Ignores some enemy defense
 	ShadowbeamStaff: Damage increases with every bounce
 	LaserMachineGun: Spread increases with mana sickness
+	DoubleSentrySlots: Can place 2 per sentry slot
 }
 
 Buffs: {
@@ -135,4 +146,17 @@ Projectiles: {
 	MinisharkProjectile.DisplayName: Minishark
 	HandgunProjectile.DisplayName: Handgun
 	ClockworkCogProjectile.DisplayName: Clockwork Cog
+	ShotgunProjectile.DisplayName: Shotgun Projectile
+	ZapinatorProjectile.DisplayName: Zapinator Projectile
+	LuminiteArrowLaserProjectile.DisplayName: Luminite Arrow Laser Projectile
+	BloodRainBowProjectile.DisplayName: Blood Rain Bow Projectile
+	BloodRainBowRainbow.DisplayName: Blood Rain Bow Rainbow
+	FrostHydraIceChunk.DisplayName: Frost Hydra Ice Chunk
+	FrostHydraSentry.DisplayName: Frost Hydra Sentry
+	FrostHydraIceShard.DisplayName: Frost Hydra Ice Shard
+	BlueFlareProjectile.DisplayName: Blue Flare Projectile
+	RainbowFlareProjectile.DisplayName: Rainbow Flare Projectile
+	SpelunkerFlareProjectile.DisplayName: Spelunker Flare Projectile
+	ShimmerFlareProjectile.DisplayName: Shimmer Flare Projectile
+	IchorFlareProjectile.DisplayName: Ichor Flare Projectile
 }

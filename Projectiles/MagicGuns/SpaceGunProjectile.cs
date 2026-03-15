@@ -75,7 +75,7 @@ namespace WeaponRevamp.Projectiles.MagicGuns
         {
             target.immune[projectile.owner] = 2;
             CreateHitEffect(projectile);
-            projectile.damage = (int)((float)projectile.damage*0.80f );
+            projectile.damage = (int)((float)projectile.damage*0.70f );
             
             base.OnHitNPC(projectile, target, hit, damageDone);
         }

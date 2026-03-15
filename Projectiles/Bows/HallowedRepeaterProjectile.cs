@@ -32,6 +32,7 @@ namespace WeaponRevamp.Projectiles.Bows
             Projectile.maxPenetrate *= 2;
             Projectile.extraUpdates *= 2;
             Projectile.extraUpdates += 1;
+            useArrowTrail = false;
             //Main.NewText(Projectile.ai[0]);
 
 
@@ -69,6 +70,7 @@ namespace WeaponRevamp.Projectiles.Bows
                 case 282: dustColor = new Color(100, 0, 255, 0); break; //venom
                 case 474: dustColor = new Color(255, 224, 200, 0); break; //bone
                 case 639: dustColor = new Color(0, 255, 150, 0); break; //luminite
+                case luminiteEye: dustColor = new Color(0, 255, 150, 0); break; //luminite
                 case 1006: dustColor = new Color(255, 128, 255, 0); break; //shimmer
                 default: dustColor = new Color(255, 255, 255, 0); break;
             }
@@ -113,6 +115,7 @@ namespace WeaponRevamp.Projectiles.Bows
                 case 282: dustColor = new Color(128, 64, 255, 0); break; //venom
                 case 474: dustColor = new Color(255, 224, 200, 0); break; //bone
                 case 639: dustColor = new Color(0, 255, 150, 0); break; //luminite
+                case luminiteEye: dustColor = new Color(0, 255, 150, 0); break; //luminite
                 case 1006: dustColor = new Color(255, 128, 255, 0); break; //shimmer
                 default: dustColor = new Color(255, 255, 255, 0); break;
             }
@@ -165,34 +168,41 @@ namespace WeaponRevamp.Projectiles.Bows
                 if (spectreSpinTime > 0) { frameNum = 14; } else { frameNum = 15; }
             }
             Color renderAlpha = new Color(255,255,255,0);
-            
-            if (!luminiteDead)
+            if (Projectile.ai[0] == luminiteEye)
             {
-                if (Projectile.ai[0] == ProjectileID.MoonlordArrow)
-                {
-                    float tempLightingColor = lightingColor - 0.1f;
-                    if (tempLightingColor < 0)
-                    {
-                        tempLightingColor = 0;
-                    }
-                    Vector2 fakeVelocity = Projectile.velocity;
-                    for (int i = 230; i > Projectile.alpha; i -= 25)
-                    {
-                        position -= fakeVelocity;
-                        if (useAmmoPhysics)
-                        {
-                            fakeVelocity.Y -= 0.1f;
-                        }
-
-
-                        Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), new Color(i, i, i, 0) * tempLightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
-                    }
-
-                }
-                position = Projectile.Center - Main.screenPosition;
-                Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), renderAlpha * lightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                renderAlpha = new Color(0,0,0,0);
             }
+            
+            
+            if (Projectile.ai[0] == ProjectileID.MoonlordArrow)
+            {
+                float tempLightingColor = lightingColor - 0.1f;
+                if (tempLightingColor < 0)
+                {
+                    tempLightingColor = 0;
+                }
+                Vector2 fakeVelocity = Projectile.velocity;
+                for (int i = 230; i > Projectile.alpha; i -= 25)
+                {
+                    position -= fakeVelocity;
+                    if (useAmmoPhysics)
+                    {
+                        fakeVelocity.Y -= 0.1f;
+                    }
 
+
+                    Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), new Color(i, i, i, 0) * tempLightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+                }
+
+            }
+            position = Projectile.Center - Main.screenPosition;
+            Main.EntitySpriteDraw(texture, position, texture.Frame(1, 16, 0, frameNum), renderAlpha * lightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+            
+            if (Projectile.ai[0] == luminiteEye)
+            {
+                
+                Main.EntitySpriteDraw(luminiteEyeTexture.Value, position, luminiteEyeTexture.Value.Frame(1, 1, 0, 0), new Color(255, 255, 255, 0) * lightingColor, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
+            }
 
             return false;
         }

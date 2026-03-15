@@ -22,7 +22,7 @@ namespace WeaponRevamp.Items.Guns
         public override void SetDefaults(Item entity)
         {
             base.SetDefaults(entity);
-            entity.damage = 10;
+            entity.damage = 15;
             entity.useTime = 3;
             entity.useAnimation = 65;
             entity.useLimitPerAnimation = 4;
@@ -39,11 +39,11 @@ namespace WeaponRevamp.Items.Guns
             //velocity = velocity.RotatedByRandom(Math.PI/6);
             flash.rotation = velocity.ToRotation();
             
-            for (int i=0;i<5;i++)
+            for (int i=0;i<3;i++)
             {
                 Vector2 bulletVel = velocity.RotatedByRandom(Math.PI / 6);
                 Projectile bullet = UnifiedBulletProjectile.NewUnifiedBullet(source, position, bulletVel, ModContent.ProjectileType<ShotgunPelletProjectile>(), damage, knockback, type, player.whoAmI);
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 5; j++)
                 {
                     Dust smoke = Dust.NewDustDirect(position+(Vector2.Normalize(velocity)*40f*item.scale),0,0,DustID.Smoke,0,0,0,new Color(0.5f,0.5f,0.5f,1f));
                     smoke.velocity *= 0.1f;

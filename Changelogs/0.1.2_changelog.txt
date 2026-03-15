@@ -1,0 +1,30 @@
+- Quad Barrel Shotgun was capping dusts, and it turns out it had way more bullets than intended. fixing that.
+Projectiles per shot 5 -> 3
+Damage 10 -> 15
+
+- Added Shotgun
+
+- Added Gray & Orange Zapinator
+
+- Several general arrow changes, detailed below:
+Added a visual trail to arrows
+Arrows now have local immunity frames
+Chlorophyte arrows now lose 30% of their damage every hit, to compensate for their local immunity
+Hellfire arrows explosion radius 32 -> 48
+Spectre arrows damage after shattering 100% -> 50%
+Luminite arrows now summon homing phantasmal eyes instead of that stupid laser. They also last longer in flight.
+Added a shrapnel mechanic to all arrows allowing them to sometimes deal extra damage to another enemy if it's nearly stacked on top of the hit enemy on its last pierce
+
+- Added Blood Rain Bow
+
+- Added Staff of the Frost Hydra
+
+- Space Gun was massively overperforming, so dialing it back a bit.
+Damage 28 -> 22
+Falloff per hit 20% -> 30%
+
+- Changed Crystal Bullet item texture to better fit its new projectile design
+
+- Added Flare gun
+Comes with all-new Ichor Flares and Cluster Flares!
+
