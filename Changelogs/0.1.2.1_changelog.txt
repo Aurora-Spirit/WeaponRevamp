@@ -1,0 +1,2 @@
+-fixed mod icon not appearing ingame
+-fixed laser machinegun tooltip causing tooltip loading to fail

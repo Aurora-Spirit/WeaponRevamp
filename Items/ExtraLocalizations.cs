@@ -24,7 +24,7 @@ public class LaserMachineGun : GlobalItem
     public static LocalizedText Tooltip { get; private set; }
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
     {
-        tooltips.Insert(7, new(Mod, "Tooltip", Tooltip.Value));
+        tooltips.Insert(6, new(Mod, "Tooltip", Tooltip.Value));
     }
     // END BLOCK //
 }
