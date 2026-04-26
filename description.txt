@@ -1,12 +1,14 @@
+0.1.2 Update: Added Shotgun, both Zapinators, Blood Rain Bow, Staff of the Frost Hydra, and Flare Gun
+
 This mod aims to rework the functionality of every vanilla weapon.
 Tack this onto your modded playthrough to help freshen up the experience, and make vanilla weapons new and interesting again!
 This mod also adds a couple new weapons to fill gaps in progression.
 This is a beta version. Not every feature is finished yet.
 
 Current features:
--51 weapons reworked
+-57 weapons reworked
 -1 weapon added from old gen console, reworked as well
--2 new ammos (1 arrow and 1 bullet)
+-4 new ammos (1 arrow, 1 bullet, 2 flares)
 
 Planned features:
 -Most weapons reworked (there are a couple weapons that were changed in 1.4.4 that are not planned to be reworked)
@@ -18,6 +20,9 @@ Planned features:
 Report bugs, provide feedback, and suggest ideas to me on discord: @aurora_spirit
 
 I'm a solo dev, so updates will likely take a while. Be patient!
+
+A wiki for the mod is available at: https://terrariamods.wiki.gg/wiki/Full_Weapons_Overhaul
+Look at my awful source code at: https://github.com/Aurora-Spirit/WeaponRevamp
 
 Credits:
 Aurora_Spirit - Coding, Spriting, Concepts

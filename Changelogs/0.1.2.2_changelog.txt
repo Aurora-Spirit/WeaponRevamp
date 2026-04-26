@@ -1,0 +1,1 @@
+Fixed an issue that caused the steam workshop description to revert to the 0.1 release every time I release an update
