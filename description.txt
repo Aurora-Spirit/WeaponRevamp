@@ -6,7 +6,7 @@ This mod also adds a couple new weapons to fill gaps in progression.
 This is a beta version. Not every feature is finished yet.
 
 Current features:
--57 weapons reworked
+-62 weapons reworked
 -1 weapon added from old gen console, reworked as well
 -4 new ammos (1 arrow, 1 bullet, 2 flares)
 
