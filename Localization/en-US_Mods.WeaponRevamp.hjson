@@ -159,4 +159,7 @@ Projectiles: {
 	SpelunkerFlareProjectile.DisplayName: Spelunker Flare Projectile
 	ShimmerFlareProjectile.DisplayName: Shimmer Flare Projectile
 	IchorFlareProjectile.DisplayName: Ichor Flare Projectile
+	PhoenixBlasterProjectile.DisplayName: Phoenix Blaster Projectile
+	ThunderZapperProjectile.DisplayName: Thunder Zapper Projectile
+	TsunamiProjectile.DisplayName: Tsunami Projectile
 }

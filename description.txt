@@ -26,7 +26,7 @@ Look at my awful source code at: https://github.com/Aurora-Spirit/WeaponRevamp
 
 Credits:
 Aurora_Spirit - Coding, Spriting, Concepts
-Alex (the bat) - Spriting, Concepts, Wiki
+Corrupted Hallow - Spriting, Concepts, Wiki
 Steelo - Concepts
 Voltics - Concepts
 

@@ -53,7 +53,7 @@ namespace WeaponRevamp.Projectiles.Bows
         internal const int shimmer = 1006;
         internal static int spectre = ModContent.ProjectileType<SpectreArrowProjectile>();
 
-
+        
 
         public override void SetDefaults()
         {
@@ -414,12 +414,17 @@ namespace WeaponRevamp.Projectiles.Bows
                     break;
                 case 5: //jester
                     int overrideHeight = Main.rand.Next(3);
-                    Dust.NewDust(Type: overrideHeight switch
+                    Dust jesterTrail = Dust.NewDustDirect(Type: overrideHeight switch
                     {
                         0 => 15,
                         1 => 57,
                         _ => 58,
-                    }, Position: Projectile.position, Width: Projectile.width, Height: Projectile.height, SpeedX: Projectile.velocity.X * 0.5f, SpeedY: Projectile.velocity.Y * 0.5f, Alpha: 150, newColor: default(Color), Scale: 1.2f);
+                    }, Position: Projectile.position, Width: 0, Height: 0, SpeedX: 0, SpeedY: 0, Alpha: 150, newColor: default(Color), Scale: 1.2f);
+                    jesterTrail.velocity *= 0;
+                    jesterTrail.velocity += Projectile.velocity * 0.5f;
+                    Vector2 spiralVel = new Vector2(0.9f, 0).RotatedBy(Projectile.timeLeft * (Math.PI + 0.25f));
+                    spiralVel.X *= 0.2f;
+                    jesterTrail.velocity += spiralVel.RotatedBy(Projectile.rotation);
                     break;
                 case 41: //hellfire
                     Lighting.AddLight(Projectile.Center, 1f * 0.3f, 0.8f * 0.3f, 0.6f * 0.3f);
@@ -715,7 +720,9 @@ namespace WeaponRevamp.Projectiles.Bows
                     break;
             }
 
-            for (int num418 = 0; num418 < 10; num418++) //death dusts
+            float jesterArrowStarRotation = Main.rand.NextFloat((float)Math.PI * 2);
+            int maxi = 10;
+            for (int i = 0; i < maxi; i++) //death dusts
             {
                 switch (Projectile.ai[0])
                 {
@@ -726,15 +733,25 @@ namespace WeaponRevamp.Projectiles.Bows
                         Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GoblinSorcerer, 0f, 0f, 150, default(Color), 1f);
                         break;
                     case 5: //jester
-                        for (int num634 = 0; num634 < 6; num634++)
+                        int maxj = 6;
+                        for (int j = 0; j < maxj; j++)
                         {
                             int num1030 = Main.rand.Next(3);
-                            Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, num1030 switch
+                            Dust jesterDeath = Dust.NewDustDirect(Projectile.position, 0, 0, num1030 switch
                             {
                                 0 => 15,
                                 1 => 57,
                                 _ => 58,
                             }, Projectile.velocity.X * 0.5f, Projectile.velocity.Y * 0.5f, 150, default(Color), 1.5f);
+                            //math hell to create a star
+                            double pi = Math.PI;
+                            double m = 3; //how far inwards the non-point points of the star bend, higher numbers bend further with weird effects starting at n-1, and a regular polygon at 1
+                            double n = 5; //the number of points the star has
+                            double theta = pi*2*((i+j*maxi*1f) / (maxi * maxj));
+                            //double theta = 3*pi/6;
+                            jesterDeath.velocity = Vector2.UnitX * (float)( (Math.Cos( pi*(m+1) / (2*n) )) / (Math.Cos( (2*(Math.Asin(Math.Cos(n*theta))) + pi*m) / (2*n) )) );
+                            jesterDeath.velocity = jesterDeath.velocity.RotatedBy(jesterArrowStarRotation - theta) * Main.rand.NextFloat(1.8f,2.5f);
+                            jesterDeath.velocity += Projectile.oldVelocity * 0.5f;
                         }
                         break;
                     case 41: //a bit of code here to handle a netsync issue
@@ -1031,6 +1048,8 @@ namespace WeaponRevamp.Projectiles.Bows
 
         public static Projectile NewUnifiedArrow(IEntitySource spawnSource, Vector2 position, Vector2 velocity, int type, int damage, float knockback, int ammoType, int owner = -1, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f)
         {
+            spectre = ModContent.ProjectileType<SpectreArrowProjectile>();
+            
             if (ammoType == luminiteEye)
             {
                 

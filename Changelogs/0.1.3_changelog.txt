@@ -1,0 +1,17 @@
+- Added Phoenix Blaster
+
+- Added Thunder Zapper
+
+- Fixed an issue with spectre arrows not firing correctly
+
+- Added Imp Staff
+
+- Added Nightglow
+
+- Added Tsunami
+
+- Improved jester arrow effects
+
+- Fixed an issue with luminite arrows spawning spOoOoOky ghost arrows in multiplayer
+
+- Updated some tooltips

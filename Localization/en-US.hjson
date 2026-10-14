@@ -14,4 +14,11 @@ ItemTooltip: {
 	GoldenBullet: Reverses direction after hitting an enemy, and enemies drop more money
 	ExplodingBullet: Automatically explodes when in range of an enemy
 	MoonlordBullet: "'A true bullet hell'"
+	Tsunami:
+		'''
+		80% chance to save ammo
+		Fires a pressurized stream of arrows
+		Stop firing to rebuild pressure
+		'''
+	MoltenFury: Ignites arrows with a short-range molten geyser
 }

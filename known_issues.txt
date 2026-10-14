@@ -1,1 +1,7 @@
 gun problems:
+
+
+
+
+luminite arrows are broken in netplay
+imp staff is broken in netplay

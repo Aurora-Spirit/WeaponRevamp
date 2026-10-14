@@ -29,7 +29,7 @@ namespace WeaponRevamp.Projectiles.Guns.UnifiedBullet
         private static Asset<Texture2D> shardTexture;
         private static Asset<Texture2D> redLightTexture;
         private static Asset<Texture2D> luminiteEyeTexture;
-        private static SoundStyle shockSoundStyle;
+        public static SoundStyle shockSoundStyle;
         public const int tungsten = 1;
         public const int luminiteEyes = 2;
         private bool behaviorsAdded = false;

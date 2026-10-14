@@ -66,14 +66,14 @@ namespace WeaponRevamp.Projectiles.Bows
                 Projectile.scale += 0.2f;
             }
             
-            if (Projectile.timeLeft == 20)
+            if (Projectile.timeLeft == 20 && Main.myPlayer == Projectile.owner)
             {
                 //forgive me for my coding sins. i hope this is relatively readable.
                 rotate = (float)Math.PI / 8f * (Main.rand.NextBool() ? 1 : -1);
                 UnifiedArrowProjectile.NewUnifiedArrow(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity.RotatedBy(rotate), (int)Projectile.ai[0], Projectile.damage/2, Projectile.knockBack * 0.5f, ProjectileID.MoonlordArrow + 1, Projectile.owner, 0, Projectile.ai[1], Projectile.ai[2]);
                 rotate *= -1;
             }
-            if (Projectile.timeLeft == 10)
+            if (Projectile.timeLeft == 10 && Main.myPlayer == Projectile.owner)
             {
                 UnifiedArrowProjectile.NewUnifiedArrow(Projectile.GetSource_FromThis(), Projectile.position, Projectile.velocity.RotatedBy(rotate), (int)Projectile.ai[0], Projectile.damage/2, Projectile.knockBack * 0.5f, ProjectileID.MoonlordArrow + 1, Projectile.owner, 0, Projectile.ai[1], Projectile.ai[2]);
             }
